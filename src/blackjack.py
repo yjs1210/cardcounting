@@ -88,6 +88,7 @@ class Deck():
         self.count = 0
         self.num_decks = num_decks
         self.cards_in_a_deck = cards_in_a_deck
+        self.shuffle()
 
     def deal(self):
         if len(self.get_cards()) == 0:
