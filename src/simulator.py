@@ -124,7 +124,6 @@ if __name__ == '__main__':
     player = Player(bankroll=1000, hard_policy=hard_policy, soft_policy=soft_policy, split_policy=split_policy, betting_policy=betting_policy)
     results = parallel_processing(player, num_decks = 6, iterations= 1000, n_samples = 5000, threshold=.35)
     ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-    sys.path.append(os.path.join(ROOT, "src"))
     filehandler = open("data/vegas_conservative_bets_results.obj","wb")
     pickle.dump(results, filehandler)
     filehandler.close() 
