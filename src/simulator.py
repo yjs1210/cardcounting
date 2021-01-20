@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from blackjack import Actions, Deck, Player, Hand, play, resolve_environment
+from blackjack import Actions, Deck, Player, Hand, play, resolve_environment, parallel_processing
 
 import numpy as np
 
@@ -117,11 +117,19 @@ ranges = [-3,-2,-1,0,0,1,2,3]
 betting_policy = (wager_amts, ranges)
 
 if __name__ == '__main__':
-    results = []
-    for i in range(10000):
-        player = Player(bankroll=10000, hard_policy=hard_policy, soft_policy=soft_policy, split_policy=split_policy, betting_policy=betting_policy)
-        deck = Deck(6)
-        # need a way to get deck count
-        resolve_environment(player, deck, 6, 3000, .35)
-        results.append(player.bankroll)
-    print('yo')    
+    import pickle
+    wager_amts = [1,1,1,1,1,1,4,8,16]
+    ranges = [-3,-2,-1,0,0,1,2,3]
+    betting_policy = (wager_amts, ranges)
+    player = Player(bankroll=1000, hard_policy=hard_policy, soft_policy=soft_policy, split_policy=split_policy, betting_policy=betting_policy)
+    results = parallel_processing(player, num_decks = 6, iterations= 1000, n_samples = 5000, threshold=.35)
+    ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+    sys.path.append(os.path.join(ROOT, "src"))
+    filehandler = open("data/vegas_conservative_bets_results.obj","wb")
+    pickle.dump(results, filehandler)
+    filehandler.close() 
+    file = open("data/vegas_conservative_bets_results.obj",'rb')
+    results = pickle.load(file)
+    file.close()
+            
+    

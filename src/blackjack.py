@@ -413,6 +413,7 @@ def resolve_environment(player, starting_deck=None, num_decks = 6, iterations= 1
         deck = check_if_new_deck(deck, threshold, num_decks)
 
 def worker(num_decks, player, iterations, threshold):
+    starting = player.get_bankroll()
     deck = Deck(num_decks)
     for i in range(iterations):
         true_count = deck.get_true_count()
@@ -420,19 +421,26 @@ def worker(num_decks, player, iterations, threshold):
         play(player=player, deck=deck, wager=wager)
         player.next_round()
         deck = check_if_new_deck(deck, threshold, num_decks)
-    return player.get_bankroll()
+    return player.get_bankroll() - starting
 
-def parallel_processing(player, num_decks = 6, iterations= 1000, n_samples = 100, threshold = .35, n_processes = 4):    
+def parallel_processing(player, num_decks = 6, iterations= 1000, n_samples = 100, threshold = .35):    
     pool = Pool()
     arguments = [(num_decks, player.copy(), iterations, threshold) for i in range(n_samples)]
     output = pool.starmap(worker, arguments)
+    pool.close()
     return output
         
 if __name__ == '__main__':
+    wager_amts = [1,1,1,1,1,1,8,16,32]
+    ranges = [-3,-2,-1,0,0,1,2,3]
+    betting_policy = (wager_amts, ranges)
+    player = Player(bankroll=1000, hard_policy=hard_policy, soft_policy=soft_policy, split_policy=split_policy, betting_policy=betting_policy)
+    results = parallel_processing(player, num_decks = 6, iterations= 1000, n_samples = 10000, threshold=.35)
+    final_results = final_results + results 
+    progress_bar.progress(min(idx/len(chunks), 1.0))
     deck = Deck()
     deck.shuffle()
     dealer_card = deck.deal()
-    player = Player()
     player_card1, player_card2 = deck.deal(), deck.deal()
     player_hand = Hand(set([player_card1,player_card2]))
     resolve_round(deck, player)

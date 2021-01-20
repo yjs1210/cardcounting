@@ -32,8 +32,7 @@ def test_overall_play():
 
 
 def test_parallel():
-    
     player = Player(bankroll=10000, hard_policy=hard_policy, soft_policy=soft_policy, split_policy=split_policy, betting_policy=betting_policy)
-    output = parallel_processing(player=player, iterations=1000, n_samples=1000)
-    stop_here
+    output = parallel_processing(player=player, iterations=1000, n_samples=100)
+    assert(len(output) == 10)
 

@@ -285,11 +285,11 @@ def test_play_set2():
 
     # test bunch of weird surredner hit surredner stand,... etc rules
     hands_10 =  [Cards.TEN, Cards.EIGHT, Cards.FOUR, Cards.FOUR, Cards.NINE, Cards.ACE] # does not split 44, hits into 16, but doesn't surrender, busts. 
-    hands_10 =  [Cards.TEN, Cards.SEVEN, Cards.NINE, Cards.ACE] # surrender 17 
-    hands_10 =  [Cards.TEN, Cards.SEVEN, Cards.TEN, Cards.ACE] # dealer BJ can't surrender
-    hands_10 =  [Cards.FIVE, Cards.TEN, Cards.TWO, Cards.NINE, Cards.ACE] # hits into surrender can't surrender, stands
+    hands_11 =  [Cards.TEN, Cards.SEVEN, Cards.NINE, Cards.ACE] # surrender 17 
+    hands_12 =  [Cards.TEN, Cards.SEVEN, Cards.TEN, Cards.ACE] # dealer BJ can't surrender
+    hands_13 =  [Cards.FIVE, Cards.TEN, Cards.TWO, Cards.NINE, Cards.ACE] # hits into surrender can't surrender, stands
 
-    deck.set_cards(deck.get_cards() + hands_9 + hands_8+ hands_7 + hands_6 + hands_5 + hands_4 + hands_3 + hands_2 + hands_1)
+    deck.set_cards(deck.get_cards() + hands_13 + hands_12 + hands_11 + hands_10 + hands_9 + hands_8+ hands_7 + hands_6 + hands_5 + hands_4 + hands_3 + hands_2 + hands_1)
     plays = play(player, deck=deck, wager=1)
     player.next_round()
     assert player.get_bankroll() == 100+(1)
