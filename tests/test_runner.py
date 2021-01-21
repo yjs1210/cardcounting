@@ -76,5 +76,5 @@ def test_parallel():
         split_policy=split_policy,
         betting_policy=betting_policy,
     )
-    output = parallel_processing(player=player, iterations=1000, n_samples=100)
+    output = parallel_processing(player=player, iterations=100, n_samples=10)
     assert len(output) == 10
