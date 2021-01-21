@@ -9,8 +9,14 @@ from blackjack import Actions
 
 
 def test_hard_policy():
-    assert hard_policy[4] == hard_policy[5] == hard_policy[6] ==hard_policy[7]  ==hard_policy[8]
-    assert all([i== Actions.HIT for i in hard_policy[4].values()])
+    assert (
+        hard_policy[4]
+        == hard_policy[5]
+        == hard_policy[6]
+        == hard_policy[7]
+        == hard_policy[8]
+    )
+    assert all([i == Actions.HIT for i in hard_policy[4].values()])
     assert hard_policy[9][2] == Actions.HIT
     assert hard_policy[9][3] == Actions.DOUBLE_HIT
     assert hard_policy[9][4] == Actions.DOUBLE_HIT
@@ -112,6 +118,7 @@ def test_hard_policy():
     assert hard_policy[18][10] == Actions.STAND
     assert hard_policy[18][11] == Actions.STAND
 
+
 def test_soft_policy():
     assert soft_policy[13][2] == Actions.HIT
     assert soft_policy[13][3] == Actions.HIT
@@ -194,7 +201,8 @@ def test_soft_policy():
     assert soft_policy[20][9] == Actions.STAND
     assert soft_policy[20][10] == Actions.STAND
     assert soft_policy[20][11] == Actions.STAND
-    
+
+
 def test_split_policy():
     assert split_policy[2][2] == Actions.SPLIT_IF_DOUBLE
     assert split_policy[2][3] == Actions.SPLIT_IF_DOUBLE
@@ -217,7 +225,7 @@ def test_split_policy():
     assert split_policy[4][9] == Actions.HIT
     assert split_policy[4][10] == Actions.HIT
     assert split_policy[4][11] == Actions.HIT
-    assert split_policy[5]==hard_policy[10]
+    assert split_policy[5] == hard_policy[10]
     assert split_policy[6][2] == Actions.SPLIT_IF_DOUBLE
     assert split_policy[6][3] == Actions.SPLIT
     assert split_policy[6][4] == Actions.SPLIT
@@ -258,7 +266,7 @@ def test_split_policy():
     assert split_policy[9][9] == Actions.SPLIT
     assert split_policy[9][10] == Actions.STAND
     assert split_policy[9][11] == Actions.STAND
-    assert split_policy[10] == hard_policy[20]   
+    assert split_policy[10] == hard_policy[20]
     assert split_policy[11][2] == Actions.SPLIT
     assert split_policy[11][3] == Actions.SPLIT
     assert split_policy[11][4] == Actions.SPLIT
